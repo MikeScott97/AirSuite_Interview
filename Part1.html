@@ -15,6 +15,7 @@
     <br />
     <br />
     <div id="output"></div>
+    <div id="p2Out"></div>
     <script>
         var gate = false;
         function sendReceive(url){
@@ -38,6 +39,22 @@
             };
             xhr.send(null);
             console.log("hi");
+            
+            p2Receive();
+        }
+
+        function p2Receive(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:8080/Part2.php", true);
+            xhr.onload = function (){
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    document.getElementById("p2Out").innerHTML = xhr.responseText;
+                }
+            }    
+            xhr.onerror = function () {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
         }
 
     </script>
