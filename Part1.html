@@ -17,32 +17,37 @@
     <div id="output"></div>
     <div id="p2Out"></div>
     <script>
+        //using gate as a boolean to see if the initial request was completed
         var gate = false;
         function sendReceive(url){
-            console.log("bye");
+            //console.log("bye");
             var xhr = new XMLHttpRequest();
+            //start an xml request
             xhr.open("GET", url, true);
+            //once the request has completed if succesful send the data to console
             xhr.onload = function (){
                 if(xhr.readyState === 4 && xhr.status === 200){
                     console.log(xhr.responseText);
+                    //check if the first request has bee successful
                     if(gate == true){
+                        //output to div
                         document.getElementById("output").innerHTML = xhr.responseText;
                         gate = false;
                     }else{
+                        //if successful set gate to true and call recursive function with url 2
                         gate = true;
                         sendReceive("http://httpbin.org/base64/VGhpcyB1c2VkIHRvIGJlIGVuY29kZWQuIE5vdCBhbnltb3JlIQ==");
                     }
                 }
             };
+            //error output
             xhr.onerror = function () {
                 console.error(xhr.statusText);
             };
             xhr.send(null);
             console.log("hi");
-            
-            p2Receive();
         }
-
+        //Attempt at part 3, mostly just copy work from part 1
         function p2Receive(){
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://localhost:8080/Part2.php", true);
