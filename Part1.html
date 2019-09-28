@@ -8,7 +8,39 @@
 </head>
 
 <body>
+    <img src="https://image.shutterstock.com/image-photo/blue-helicopter-isolated-on-white-260nw-523873558.jpg" alt="Blue Helicopter on white background" />
+    <br />
+    <br />
+    <input type="button" value="Click Me" onclick="sendReceive('http://httpbin.org/delay/5')" />
+    <br />
+    <br />
+    <div id="output"></div>
+    <script>
+        var gate = false;
+        function sendReceive(url){
+            console.log("bye");
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onload = function (){
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    console.log(xhr.responseText);
+                    if(gate == true){
+                        document.getElementById("output").innerHTML = xhr.responseText;
+                        gate = false;
+                    }else{
+                        gate = true;
+                        sendReceive("http://httpbin.org/base64/VGhpcyB1c2VkIHRvIGJlIGVuY29kZWQuIE5vdCBhbnltb3JlIQ==");
+                    }
+                }
+            };
+            xhr.onerror = function () {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
+            console.log("hi");
+        }
 
+    </script>
 </body>
 
 </html>
